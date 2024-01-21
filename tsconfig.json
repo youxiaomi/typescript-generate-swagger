@@ -1,0 +1,15 @@
+
+{
+  "compilerOptions": {
+    "module": "CommonJS",
+    "esModuleInterop": true,
+    "target": "ESNext",
+    // "noImplicitAny": false,
+    "moduleResolution": "node",
+    "sourceMap": true,
+    "outDir": "dist",
+    "allowJs": true,
+  },
+  "include": ["swagger", "gulp/gulpfile.ts", "egg/eggSwagger.ts"]
+  // "include": ["src"]
+}
