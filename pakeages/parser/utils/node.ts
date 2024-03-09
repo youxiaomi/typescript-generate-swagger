@@ -35,7 +35,7 @@ export function findNodeAtPosition(node: ts.Node, position: number): ts.Node | u
   return undefined;
 }
 
-export function getNodeComment(node:ts.Node){
+export function getSymbolComment(node:ts.Node){
   let docs = ts.getJSDocCommentsAndTags(node)
   let commentNode = docs.length ? docs[0].comment : ''
   function getComment(commentNode: ts.JSDoc['comment']) {

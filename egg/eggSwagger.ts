@@ -34,12 +34,13 @@ function generateDocumentation(
 
       // }
       let props = currentType.getProperties()
-      let typeNode = checker.typeToTypeNode(currentType);
+      let typeNode = checker.typeToTypeNode(currentType,undefined,undefined);
       console.log(ts);
       
       let typeString = checker.typeToString(currentType)
       console.log(typeString);
-      let isKeyWord = ts.isKeyword(typeNode?.kind)
+      // let isKeyWord = ts.isKeword(typeNode?.kind)
+      let isKeyWord = true
       if (isKeyWord) {
         currentDoc.type = typeString
         return
@@ -115,9 +116,9 @@ function generateDocumentation(
         if(ts.isArrowFunction(child)){
           each(child.body)
         }
-        if(ts.isSyntaxList(child) as any){
-          each(child)
-        }
+        // if(ts.isSyntaxList(child) as any){
+        //   each(child)
+        // }
         if(ts.isExpressionStatement(child)){
           each(child)
         }

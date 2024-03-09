@@ -68,20 +68,12 @@ export const createTsPrograme = (options: {
   const { basePath } = options
   let tsconfigName = 'tsconfig.json'
   let tsconfigPath = path.join(basePath, tsconfigName)
-  // const configPath = ts.findConfigFile(basePath, ts.sys.fileExists, tsconfigName);
-  // if(!configPath){
-  //   console.error(`can not find tsconfig.json in ${basePath} tsconfig.json`)
-  //   return
-  // }
   const readConfigFile = ts.readConfigFile(tsconfigPath, ts.sys.readFile);
   if(!readConfigFile.config){
-    console.error(`can not read tsconfig.json in ${basePath} tsconfig.json`)
-    return 
+    throw new Error(`can not read tsconfig.json in ${basePath} tsconfig.json`)
   }
   const parsedConfig = ts.parseJsonConfigFileContent(readConfigFile.config, ts.sys, basePath);
-  parsedConfig.fileNames
   let program = ts.createProgram([
-    // ...files,
     ...parsedConfig.fileNames,
   ], parsedConfig.options);
 

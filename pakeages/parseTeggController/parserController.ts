@@ -1,17 +1,8 @@
 
 import * as ts from 'typescript'
-import { ParserTypeInfo, getDocType, getPathInfoForJsDoc } from '../parser/parserTypeNode'
-import { ExtractTypeNode, HttpContent, HttpMethod, PathInfo, SwaggerParameter, SwaggerTypes, TypeNodeInfo, TypeNodeObject, TypeNodePrimitive, convertTypeNodeInfoToSwaggerRequestBody, convertTypeNodeInfoToSwaggerResponse, convertTypeNodeToSwggerParameters, createDoc } from '../generateDoc/createDoc'
-import { getNodeComment } from '../utils/node'
-import { get } from 'http'
-
-
-
-
-
-
-
-
+import { ParserTypeInfo, getDocType, getCommentTags } from '../parser/parserTypeNode'
+import {  HttpContent, HttpMethod, PathInfo, SwaggerParameter, SwaggerTypes, TypeNodeInfo, TypeNodeObject, TypeNodePrimitive, convertTypeNodeInfoToSwaggerRequestBody, convertTypeNodeInfoToSwaggerResponse, convertTypeNodeToSwggerParameters, createDoc } from '../generateDoc/createDoc'
+import { getSymbolComment } from '../parser/utils/node'
 
 
 
@@ -141,7 +132,7 @@ function processClassMemberQueryParameters(parameters:ts.NodeArray<ts.ParameterD
   function processQuery(parameter:ts.ParameterDeclaration) {
     let { type, questionToken, name, modifiers } = parameter
     let typeText = getDocType(type)
-    let description = getNodeComment(parameter)
+    let description = getSymbolComment(parameter)
     let nameText = name.getText()
     let required = !questionToken
     let typeNodeInfo: TypeNodePrimitive = {
@@ -330,7 +321,7 @@ class ParserControllerInfo{
     }
     // let file = getFile(member.getSourceFile().fileName)
     
-    let { summary, description } = getPathInfoForJsDoc({ http, path, currentPathInfo,member})
+    let { summary, description } = getCommentTags(member)
     // fs.writeFileSync(`${__dirname}/teggController.ts`, file.text)
     return {
       path,
@@ -341,23 +332,6 @@ class ParserControllerInfo{
         ...currentPathInfo,
       }
     }
-  
-  
-    // pathInfo = {
-    //   [path]: {
-    //     [http]: {
-    //       summary,
-    //       description,
-    //       ...currentPathInfo,
-  
-    //       // parameters: queryInfos.query,
-    //       // requestBody: queryInfos.body,
-    //       // responses: response
-    //     }
-    //   },
-    // }
-  
-    // return pathInfo
   }
   processClassMemberParameters(checker: ts.TypeChecker, member: ts.MethodDeclaration) {
     let { parameters, body } = member
@@ -387,7 +361,7 @@ class ParserControllerInfo{
     let type = checker.getTypeAtLocation(expression)
     let symbolNode = type.getSymbol()
     if (symbolNode) {
-      return this.parserTypeInfo.getTypeNode(checker, type,{cacheSchema:false})
+      return this.parserTypeInfo.getTypeNode( type,{cacheSchema:false})
     }
   
   
@@ -400,7 +374,7 @@ class ParserControllerInfo{
       let isBody = isHttpBody(modiferDecorators)
       if (isBody && type) {
         let typeObject = checker.getTypeAtLocation(type)
-        let response = this.parserTypeInfo.getTypeNode(checker, typeObject)
+        let response = this.parserTypeInfo.getTypeNode( typeObject)
         return response
       }
     }

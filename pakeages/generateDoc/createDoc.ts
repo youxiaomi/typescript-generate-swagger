@@ -93,19 +93,8 @@ export enum SwaggerParamsPostion {
   path = 'path',
   query = 'query',
 }
-export interface SwaggerSchemaObject {
-  "type": SwaggerTypes.object,
-  required?: string[]
-  "properties": {
-    [key: string]: Omit<ExtractTypeNode, 'required'>
-  }
-}
-export interface SwaggerSchemaArray {
-  "type": SwaggerTypes.array,
-  items: SwaggerSchema
-}
 
-export type SwaggerSchema = SwaggerSchemaObject | SwaggerSchemaArray
+
 
 interface TypeNodeBase {
   description?: string
@@ -140,20 +129,6 @@ export type TypeNodeInfo = TypeNodeUnion | {
   required?:boolean
 }
 
-/** @deprecated */
-export type ExtractTypeNode = {
-  type?: SwaggerTypes,
-  properties?: ExtractTypeObj,
-  items?: ExtractTypeNode,
-  description?: string
-  required?: boolean
-  oneOf?: ExtractTypeNode[],
-  enum?: (string | number)[]
-}
-/** @deprecated */
-export type ExtractTypeObj = {
-  [x: string]: ExtractTypeNode
-}
 
 export interface SwaggerParameter {
   name: string,
