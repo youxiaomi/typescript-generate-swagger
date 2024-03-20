@@ -1,24 +1,20 @@
 import { createTsPrograme } from './parser/createTsPrograme'
 import { createTsChecker } from './parser/createTsCheker';
-import { parserController } from './parseController/parserController';
+import { parserController } from './parseTeggController/parserController';
 import { ParserTypeInfo } from './parser/parserTypeNode';
 
 
 
 function run(options:{
   basePath: string,
-
 }){
   let programe = createTsPrograme({basePath: options.basePath});
   if(!programe){
-    console.error('createTsPrograme error')
-    return
+    throw new Error('createTsPrograme error')
   }
-  // let files = programe.getRootFileNames()
   let checker = createTsChecker(programe);
   const parserTypeNode = new ParserTypeInfo(checker,programe)
   parserController(parserTypeNode)
-  
 }
 
 

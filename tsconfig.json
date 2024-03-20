@@ -10,6 +10,6 @@
     "outDir": "dist",
     "allowJs": true,
   },
-  "include": ["swagger", "gulp/gulpfile.ts", "egg/eggSwagger.ts"]
+  // "include": ["swagger",]
   // "include": ["src"]
 }

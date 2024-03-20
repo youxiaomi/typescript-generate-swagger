@@ -1,5 +1,5 @@
 import * as ts from 'typescript'
-import { HttpContent, HttpMethod, PathInfo, SwaggerTypes, TypeNodeArray, TypeNodeInfo, TypeNodeObject, TypeNodePrimitive, getSchemaName } from '../generateDoc/createDoc'
+import { HttpContent, HttpMethod, PathInfo, SwaggerTypes, TypeNodeArray, TypeNodeInfo, TypeNodeObject, TypeNodePrimitive, getSchemaName } from '../generateSwagger/createSwagger'
 import { findNodeAtPosition, isFristBreakLine, isObjectType,  } from './utils/node'
 import { omitUndefined } from './utils'
 

@@ -1,8 +1,10 @@
 
 import * as ts from 'typescript'
 import { ParserTypeInfo, getDocType, getCommentTags } from '../parser/parserTypeNode'
-import {  HttpContent, HttpMethod, PathInfo, SwaggerParameter, SwaggerTypes, TypeNodeInfo, TypeNodeObject, TypeNodePrimitive, convertTypeNodeInfoToSwaggerRequestBody, convertTypeNodeInfoToSwaggerResponse, convertTypeNodeToSwggerParameters, createDoc } from '../generateDoc/createDoc'
+import {  HttpContent, HttpMethod, PathInfo, SwaggerParameter, SwaggerTypes, TypeNodeInfo, TypeNodeObject, TypeNodePrimitive, createDoc } from '../generateSwagger/createSwagger'
 import { getSymbolComment } from '../parser/utils/node'
+import { convertTypeNodeInfoToSwaggerRequestBody, convertTypeNodeToSwggerParameters } from '../generateSwagger/generateParameters'
+import { convertTypeNodeInfoToSwaggerResponse } from '../generateSwagger/generateResponse'
 
 
 
@@ -47,7 +49,6 @@ function getPathMethod(modifiers:ts.NodeArray<ts.ModifierLike>){
     }
     if (name.getText() == 'path') {
       if (ts.isStringLiteral(initializer)) {
-        // path = basePath + initializer.getText().slice(1, -1)
         path =  initializer.getText().slice(1, -1)
       }
     }
@@ -185,22 +186,6 @@ function findCtxQueryType(BodyBlock: ts.Block){
       if(hasCtxQuery){
         return initializer
       }
-      // if (ts.isAsExpression(initializer)) {
-      //   let { expression } = initializer
-      //   if (ts.isPropertyAccessExpression(expression)) {
-      //     let { name } = expression
-      //     let nameText = name.getText()
-      //     if (nameText == 'query') {
-      //       let nextExpress = expression.expression
-      //       if (ts.isIdentifier(nextExpress)) {
-      //         let nextName = nextExpress.getText()
-      //         if (nextName == 'ctx') {
-      //           return initializer
-      //         }
-      //       }
-      //     }
-      //   }
-      // }
     }
   }
  
@@ -295,10 +280,6 @@ class ParserControllerInfo{
   }
   processPathInfo(checker: ts.TypeChecker, member: ts.MethodDeclaration, response?: TypeNodeInfo, basePath: string = '') {
     let { modifiers  } = member
-    let pathInfo: PathInfo = {
-  
-    }
-    console.log(HttpMethod)
     if(!modifiers){
       return
     }
@@ -319,7 +300,6 @@ class ParserControllerInfo{
     if (response) {
       currentPathInfo.responses = convertTypeNodeInfoToSwaggerResponse(response)
     }
-    // let file = getFile(member.getSourceFile().fileName)
     
     let { summary, description } = getCommentTags(member)
     // fs.writeFileSync(`${__dirname}/teggController.ts`, file.text)
