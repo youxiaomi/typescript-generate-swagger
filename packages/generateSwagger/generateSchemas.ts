@@ -1,4 +1,4 @@
-import { SwaggerDoc, SwaggerTypes, TypeNodeInfo } from "./createSwagger"
+import { SwaggerDoc, SwaggerTypes, TypeNodeInfo } from "./generateSwagger"
 
 
 

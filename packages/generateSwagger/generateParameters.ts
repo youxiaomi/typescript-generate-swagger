@@ -1,4 +1,4 @@
-import { SwaggerParameter, SwaggerParamsPostion, SwaggerTypes, SwggerRequestBody, TypeNodeArray, TypeNodeInfo, TypeNodeObject, TypeNodePrimitive } from "./createSwagger"
+import { SwaggerParameter, SwaggerParamsPostion, SwaggerTypes, SwggerRequestBody, TypeNodeArray, TypeNodeInfo, TypeNodeObject, TypeNodePrimitive } from "./generateSwagger"
 
 
 function isTypeNodeObject(typeNodeInfo:TypeNodeInfo):typeNodeInfo is TypeNodeObject{
@@ -29,12 +29,6 @@ export function convertTypeNodeToSwggerParameters(typeNodeInfo:TypeNodeInfo){
             schema:schema
           })
         }
-        // if(isTypeNodeObject(info)){
-        //   if(!Array.isArray(typeNodeInfo.required)){
-        //     required = true
-        //   }
-          
-        // }
       })
     }
   }

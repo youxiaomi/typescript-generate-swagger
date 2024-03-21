@@ -1,5 +1,5 @@
 import path from "path"
-import { SwaggerDoc } from "../generateSwagger/createSwagger"
+import { SwaggerDoc } from "../generateSwagger/generateSwagger"
 import fs  from 'fs'
 import { deepMergeObjects } from "./object"
 const defaultSwaggerConfig:Omit<SwaggerDoc,"paths"> = {

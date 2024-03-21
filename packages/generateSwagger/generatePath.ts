@@ -1,4 +1,4 @@
-import { PathInfo, SwaggerDoc, SwaggerResponse } from "./createSwagger"
+import { PathInfo, SwaggerDoc, SwaggerResponse } from "./generateSwagger"
 import { convertSchema } from "./generateSchemas"
 
 function convertResponse(responses: SwaggerResponse) {

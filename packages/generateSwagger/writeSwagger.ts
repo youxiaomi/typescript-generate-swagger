@@ -1,6 +1,6 @@
 import path from "path";
-import { GenerateSwaggerConfig } from "../utils/config";
-import { SwaggerDoc } from "./createSwagger";
+import { GenerateSwaggerConfig } from "../shared/config";
+import { SwaggerDoc } from "./generateSwagger";
 import fs from 'fs'
 
 

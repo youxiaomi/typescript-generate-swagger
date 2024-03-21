@@ -1,6 +1,6 @@
 import * as fs from 'fs'
 import { convertSchema, generateSchemas } from './generateSchemas'
-import { getConfig } from '../utils/config'
+import { getConfig } from '../shared/config'
 import { generatePath } from './generatePath'
 import { writeSwagger } from './writeSwagger'
 
@@ -8,7 +8,7 @@ import { writeSwagger } from './writeSwagger'
 
 
 
-interface SwaggerPaths {
+export interface SwaggerPaths {
   [path: string]: {
     [x in keyof HttpMethod]?: {
       "tags"?: string[],
@@ -16,7 +16,7 @@ interface SwaggerPaths {
       "description"?: string,
       "operationId"?: string,
       "security"?: {
-        "petstore_auth": string[] // "write:pets"
+        "petstore_auth": string[]
       }[]
       "parameters"?: SwaggerParameter[],
       "requestBody"?: SwggerRequestBody,
@@ -25,34 +25,34 @@ interface SwaggerPaths {
   }
 }
 export interface SwaggerDoc {
-  "openapi"?:  string  // "3.0.3",
+  "openapi"?:  string 
   "info"?: {
-    "title"?: string  //  "Swagger Petstore - OpenAPI 3.0",
+    "title"?: string 
     "description"?: string  ,
-    "termsOfService"?: string //  "http://swagger.io/terms/",
+    "termsOfService"?: string
     "contact"?: {
-      "email": string //  "apiteam@swagger.io"
+      "email": string 
     },
-    "version"?:  string  // "1.0.11"
+    "version"?:  string 
     "license"?: {
-      "name":  string //  "Apache 2.0",
-      "url":  string // "http://www.apache.org/licenses/LICENSE-2.0.html"
+      "name":  string 
+      "url":  string 
     },
   },
   "externalDocs"?: {
-    "description"?:  string //  "Find out more about Swagger",
-    "url":  string //  "http://swagger.io"
+    "description"?:  string 
+    "url":  string
   },
   "tags"?: {
-    "name": string // "pet",
-    "description"?: string // "Everything about your Pets",
+    "name": string 
+    "description"?: string ,
     "externalDocs"?: {
-      "description"?: string // "Find out more",
-      "url"?: string //  "http://swagger.io"
+      "description"?: string 
+      "url"?: string 
     }
   }[]
   "servers"?: {
-    "url": string  // "https://petstore3.swagger.io/api/v3"
+    "url": string  
   }[],
   paths: SwaggerPaths,
   components?: {
@@ -172,13 +172,6 @@ export function createDoc(pathInfos:PathInfo,schemas:Map<string,TypeNodeInfo>){
     paths: { }
   }
   swaggerDocs = generateSchemas(swaggerDocs,schemas)
-  // Array.from(schemas.keys()).forEach(name => {
-  //   let currentTypeInfo = schemas.get(name)
-  //   swagerDocs.components = swagerDocs.components || { schemas:{}}
-  //   if(currentTypeInfo){
-  //     swagerDocs.components.schemas[name] = convertSchema(currentTypeInfo) //  
-  //   }
-  // })
   swaggerDocs = generatePath(swaggerDocs,pathInfos)
   writeSwagger(config,swaggerDocs)
 }
@@ -188,8 +181,4 @@ export function createDoc(pathInfos:PathInfo,schemas:Map<string,TypeNodeInfo>){
 
 export function getSchemaName(name:string){
   return `#/components/schemas/${name}`
-}
-
-function writeFile(file,content){
-  
 }

@@ -1,7 +1,7 @@
-import { createTsPrograme } from './parser/createTsPrograme'
-import { createTsChecker } from './parser/createTsCheker';
-import { parserController } from './parseTeggController/parserController';
-import { ParserTypeInfo } from './parser/parserTypeNode';
+import { createTsPrograme } from '../parser/createTsPrograme'
+import { createTsChecker } from '../parser/createTsCheker';
+import { parserController } from './parserController';
+import { ParserTypeInfo } from '../parser/parserTypeNode';
 
 
 
