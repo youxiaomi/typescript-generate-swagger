@@ -1,17 +1,47 @@
 {
-  "name": "swagger",
+  "name": "swagger-generate",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "packages/swagger-tegg/dist/index.js",
+  "typings": "packages/swagger-tegg/dist/index.d.ts",
+  "workspaces": [
+    "packages/*"
+  ],
+  "files": [
+    "packages/*/dist/**",
+    "packages/*/package.json"
+  ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "tegg-swagger":"ts-node egg/tegg-swagger/index.ts"
+    "tegg-swagger": "ts-node egg/tegg-swagger/index.ts"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@swagger-generate/ast-parser": "file:./packages/ast-parser",
+    "@swagger-generate/share": "file:./packages/share",
+    "@swagger-generate/swagger-generate": "file:./packages/swagger-generate",
+    "@swagger-generate/swagger-tegg": "file:./packages/swagger-tegg",
+    "@types/babel-core": "^6.25.10",
     "@types/node": "^20.10.6",
     "fs-extra": "^11.2.0",
-    "typescript": "^5.3.3"
+    "typescript": "^5.3.3",
+    "vinyl-fs": "^4.0.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.24.7",
+    "@babel/plugin-transform-typescript": "^7.24.7",
+    "@babel/preset-env": "^7.24.7",
+    "@babel/preset-stage-0": "^7.8.3",
+    "@babel/types": "^7.24.7",
+    "babel-plugin-module-resolver": "^5.0.2",
+    "chalk": "^5.3.0",
+    "chokidar": "^3.6.0",
+    "lerna": "^8.1.6",
+    "rimraf": "^5.0.8",
+    "through2": "^4.0.2",
+    "ts-loader": "^9.5.1",
+    "ttypescript": "^1.5.15",
+    "typescript-transform-paths": "^3.4.7"
   }
 }

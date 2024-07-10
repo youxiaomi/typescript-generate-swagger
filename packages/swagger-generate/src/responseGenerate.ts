@@ -1,4 +1,4 @@
-import { SwaggerResponse, TypeNodeInfo } from "./generateSwagger"
+import { SwaggerResponse, TypeNodeInfo } from "@swagger-generate/share"
 
 export function convertTypeNodeInfoToSwaggerResponse(typeNodeInfo:TypeNodeInfo|undefined,options?:{httpCode:number,description?:string}){
   let {httpCode = 200,description = ''} = options || {}

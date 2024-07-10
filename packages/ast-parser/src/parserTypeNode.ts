@@ -1,9 +1,9 @@
 import * as ts from 'typescript'
-import { HttpContent, HttpMethod, PathInfo, SwaggerTypes, TypeNodeArray, TypeNodeInfo, TypeNodeObject, TypeNodePrimitive, getSchemaName } from '../generateSwagger/generateSwagger'
-import { findNodeAtPosition, isFristBreakLine, isObjectType,  } from './utils/node'
-import { omitUndefined } from './utils'
+import { HttpContent, HttpMethod, PathInfo, SwaggerTypes, TypeNodeArray, TypeNodeInfo, TypeNodeObject, TypeNodePrimitive,  } from '@swagger-generate/share'
+import { findNodeAtPosition, isFristBreakLine, isObjectType,  } from '../utils/node'
+import { omitUndefined } from '../utils'
 
-
+import { getSchemaName } from "@swagger-generate/swagger-generate"
 export function getDocType(typeNode?: ts.TypeNode) {
   if(!typeNode){
     return SwaggerTypes.string

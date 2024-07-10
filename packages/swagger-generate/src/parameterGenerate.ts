@@ -1,4 +1,4 @@
-import { SwaggerParameter, SwaggerParamsPostion, SwaggerTypes, SwggerRequestBody, TypeNodeArray, TypeNodeInfo, TypeNodeObject, TypeNodePrimitive } from "./generateSwagger"
+import { SwaggerParameter, SwaggerParamsPostion, SwaggerTypes, SwggerRequestBody, TypeNodeArray, TypeNodeInfo, TypeNodeObject, TypeNodePrimitive } from "@swagger-generate/share"
 
 
 function isTypeNodeObject(typeNodeInfo:TypeNodeInfo):typeNodeInfo is TypeNodeObject{

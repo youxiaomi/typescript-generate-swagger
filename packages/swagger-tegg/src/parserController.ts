@@ -1,10 +1,10 @@
 
 import * as ts from 'typescript'
-import { ParserTypeInfo, getDocType, getCommentTags } from '../parser/parserTypeNode'
-import {  HttpContent, HttpMethod, PathInfo, SwaggerParameter, SwaggerTypes, TypeNodeInfo, TypeNodeObject, TypeNodePrimitive, createDoc } from '../generateSwagger/generateSwagger'
-import { getSymbolComment } from '../parser/utils/node'
-import { convertTypeNodeInfoToSwaggerRequestBody, convertTypeNodeToSwggerParameters } from '../generateSwagger/generateParameters'
-import { convertTypeNodeInfoToSwaggerResponse } from '../generateSwagger/generateResponse'
+import { ParserTypeInfo, getDocType, getCommentTags } from '@swagger-generate/ast-parser'
+import {  HttpContent, HttpMethod, PathInfo, SwaggerParameter, SwaggerTypes, TypeNodeInfo, TypeNodeObject, TypeNodePrimitive } from '@swagger-generate/share'
+import { getSymbolComment } from '@swagger-generate/ast-parser'
+import { convertTypeNodeInfoToSwaggerRequestBody, convertTypeNodeToSwggerParameters } from '@swagger-generate/swagger-generate'
+import { convertTypeNodeInfoToSwaggerResponse ,createDoc } from '@swagger-generate/swagger-generate'
 
 
 

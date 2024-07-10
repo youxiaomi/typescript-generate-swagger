@@ -1,0 +1,7 @@
+{
+  "$schema": "lerna.json",
+  "version": "independent",
+  "packages": [
+    "packages/*"
+  ]
+}

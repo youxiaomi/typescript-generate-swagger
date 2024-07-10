@@ -1,5 +1,5 @@
-import { PathInfo, SwaggerDoc, SwaggerResponse } from "./generateSwagger"
-import { convertSchema } from "./generateSchemas"
+import { PathInfo, SwaggerDoc, SwaggerResponse } from "@swagger-generate/share"
+import { convertSchema } from "./schemaGenerate"
 
 function convertResponse(responses: SwaggerResponse) {
   for(let httpCode in  responses){
