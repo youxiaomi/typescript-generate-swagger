@@ -65,9 +65,6 @@ function getDefaultCompilerOptions(CompilerOptions: ts.CompilerOptions) {
 export const createTsPrograme = (options: {
   basePath: string,
 }) => {
-  if(process.env.NODE_ENV != 'debug'){
-    console.log = ()=>{}
-  }
   const { basePath } = options
   let tsconfigName = 'tsconfig.json'
   let tsconfigPath = path.join(basePath, tsconfigName)

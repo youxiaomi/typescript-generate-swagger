@@ -123,7 +123,7 @@ function processClassMemberQueryParameters(parameters:ts.NodeArray<ts.ParameterD
   }
   parameters.forEach(parameter => {
     let { type, questionToken, name, modifiers } = parameter
-    console.log(name.getText())
+    // console.log(name.getText())
     let modiferDecorators = getParameterDecoratorModifers(modifiers)
     if (isHttpQuery(modiferDecorators)) {
       let {name,typeNodeInfo} = processQuery(parameter)
@@ -223,7 +223,7 @@ export const parserController = (parserTypeInfo:ParserTypeInfo)=>{
     //   ...datas,
     //   ...data
     // }
-    console.log(controller.fileName)
+    // console.log(controller.fileName)
   })
   let schemas = parserTypeInfo.getSchemaTypeInfo()
   createDoc(pathInfo,schemas)
@@ -262,9 +262,6 @@ class ParserControllerInfo{
     }
     for(let member of members){
       if (ts.isMethodDeclaration(member)) {
-        // if(member.name.getText() != 'splitBillList'){
-        //   continue
-        // }
         let response = this.parserTypeInfo.getReturnType(checker, member) 
         let currentPathInfo = this.processPathInfo(checker, member, response, basePath)
         if(currentPathInfo){

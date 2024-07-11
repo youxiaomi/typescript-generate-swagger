@@ -15,8 +15,8 @@ export function getDocType(typeNode?: ts.TypeNode) {
       return SwaggerTypes.number
     case ts.SyntaxKind.BooleanKeyword:
       return SwaggerTypes.boolean
-    case ts.SyntaxKind.UndefinedKeyword:
-      return SwaggerTypes.string
+    // case ts.SyntaxKind.UndefinedKeyword:
+    //   return SwaggerTypes.string
     default:
       return SwaggerTypes.string
   }
@@ -118,7 +118,6 @@ export class ParserTypeInfo{
     }
     // returnType = isAsync ? checker.getTypeArguments(returnType as ts.TypeReference)[0] : returnType;
     let res = this.getTypeNode( returnType)
-    console.log(JSON.stringify(res))
     return res
   }
   getTypeNodeArray(currentType:ts.Type):TypeNodeArray | undefined{
@@ -205,12 +204,15 @@ export class ParserTypeInfo{
       } 
       return []
     }
-    if(!currentSymbol && currentType.isUnion()){
+    /** union  key?:type   is has undefine */
+    // if(!currentSymbol && currentType.isUnion()){
+    if(currentType.types.length){
       let typeinfos = currentType.types.map(type => {
         return this.getAllTypeNode(type,currentSymbol)
       })
       return omitUndefined(typeinfos)
     }
+    /** this not support */
     let types = currentSymbol?.declarations?.map(declaration => {
       if(ts.isPropertySignature(declaration)){
         let type = declaration.type
@@ -299,7 +301,7 @@ export class ParserTypeInfo{
       return typeInfo
     }
     if (isObjectType(currentType)) {
-      console.log('objectFlags', ts.TypeFlags[currentType.objectFlags])
+      // console.log('objectFlags', ts.TypeFlags[currentType.objectFlags])
       return this.getTypeNodeObject(currentType,typeNode)
     }
     if(currentType.isIntersection()){
@@ -312,7 +314,7 @@ export class ParserTypeInfo{
       return typeInfo
     }
     if (currentType.isUnion()) {
-      console.log(currentSymbol?.getName())
+      // console.log(currentSymbol?.getName())
      
      return this.getTypeNodeUnion(currentType,currentSymbol)
     }
@@ -320,6 +322,9 @@ export class ParserTypeInfo{
     return this.getDefaultTypeInfo(typeNode,currentSymbol)
   }
   getDefaultTypeInfo(typeNode:ts.TypeNode,currentSymbol:ts.Symbol|undefined){
+    if(ts.SyntaxKind.UndefinedKeyword == typeNode.kind){
+      return
+    }
     let type = getDocType(typeNode)
     if (type) {
       let comment = currentSymbol ?  getSymbolComment(currentSymbol) : ''
@@ -337,7 +342,7 @@ export class ParserTypeInfo{
     }
     let typeNode = checker.typeToTypeNode(currentType, undefined, undefined)
     let typeString = checker.typeToString(currentType)
-    console.log(typeString, currentSymbol)
+    // console.log(typeString, currentSymbol)
     if (!typeNode) {
       return
     }
@@ -345,7 +350,7 @@ export class ParserTypeInfo{
     if(ts.isTypeReferenceNode(typeNode)){
       isTypeReferenceNode = true
     }
-    console.log("typeNode", ts.SyntaxKind[typeNode.kind], ts.TypeFlags[currentType.flags])
+    // console.log("typeNode", ts.SyntaxKind[typeNode.kind], ts.TypeFlags[currentType.flags])
     
     let symbolName = currentSymbol?.getName()
     

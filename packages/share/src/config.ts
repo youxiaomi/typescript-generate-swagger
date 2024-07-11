@@ -12,8 +12,9 @@ const defaultSwaggerConfig:Omit<SwaggerDoc,"paths"> = {
 }
 
 export interface SwaggerGenerateConfig{
-  projectDir?: string
-  outFile?: string,  // out put dir
+  projectDir?: string,  //项目目录
+  outPut?: string   //文件输出目录
+  outFile?: string,  //文件名字
   swaggerConfig?: Omit<SwaggerDoc,"paths">  // swagger config
 }
 
@@ -21,11 +22,16 @@ export interface SwaggerGenerateConfig{
 const defaultSwaggerGenerateConfig: SwaggerGenerateConfig= {
   // basePath: '',
   // outFile:'docs',
-  projectDir:'./',
+  projectDir:'./', 
+  outPut:'./',  
   outFile: 'swagger.json',
   swaggerConfig: defaultSwaggerConfig
 }
-const configName = 'swagger.json'
+
+
+function isAbsolutePath(path:string){
+  return path[0] == '/'
+}
 
 
 export function setConfig(config:SwaggerGenerateConfig){
@@ -33,9 +39,11 @@ export function setConfig(config:SwaggerGenerateConfig){
     // let userConfigStr = fs.readFileSync(path.join(process.cwd(),configName),'utf-8')
     // let userConfig =  JSON.parse(userConfigStr)
     let depConfig =  deepMergeObjects(defaultSwaggerGenerateConfig, config)
-    let isAbsoluteProjectDir = depConfig.projectDir[0] == '/'
-    if(!isAbsoluteProjectDir){
+    if(!isAbsolutePath(depConfig.projectDir)){
       depConfig.projectDir = path.join(process.cwd(),depConfig.projectDir)
+    }
+    if(!isAbsolutePath(depConfig.outPut)){
+      depConfig.outPut = path.join(process.cwd(),depConfig.outPut)
     }
     return depConfig
   }catch(e){
