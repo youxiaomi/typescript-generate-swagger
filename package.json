@@ -13,7 +13,7 @@
   ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "tegg-swagger": "ts-node egg/tegg-swagger/index.ts"
+    "pack": "npm pack --pack-destination dist "
   },
   "author": "",
   "license": "ISC",
