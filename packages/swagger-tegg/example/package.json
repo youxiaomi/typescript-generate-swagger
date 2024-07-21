@@ -1,0 +1,23 @@
+{
+  "name": "@typescript-generate-swagger/swagger-tegg-example",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "egg-bin dev",
+    "clean": "rimraf dist",
+    "build": "npm run clean && tsc",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@eggjs/tegg": "^3.39.4",
+    "@eggjs/tegg-plugin": "^3.39.4",
+    "@eggjs/tsconfig": "^1.3.3",
+    "@typescript-generate-swagger/swagger-tegg": "file:../dist/typescript-generate-swagger-swagger-tegg-1.0.0.tgz",
+    "egg": "^3.27.1"
+  },
+  "devDependencies": {
+    "egg-bin": "^6.10.0"
+  }
+}

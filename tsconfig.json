@@ -12,9 +12,9 @@
     "allowJs": true,
     "baseUrl": "./",
     "paths": {
-      "@swagger-generate/swagger-generate": ["packages/swagger-generate/src/index"],
-      "@swagger-generate/ast-parser": ["packages/ast-parser/src/index"],
-      "@swagger-generate/share": ["packages/share/src/index"],
+      "@typescript-generate-swagger/swagger-generate": ["packages/swagger-generate/src/index"],
+      "@typescript-generate-swagger/ast-parser": ["packages/ast-parser/src/index"],
+      "@typescript-generate-swagger/share": ["packages/share/src/index"],
     },
   },
   "include": ["packages", "index.ts"]

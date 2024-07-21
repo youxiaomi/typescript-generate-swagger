@@ -12,7 +12,7 @@ Automatically generate swagger documents with typescript type definitions and ja
 ### usage
 
 ```
-const  { swaggerTegg } = require("@swagger-generate/swagger-tegg")
+const  { swaggerTegg } = require("@typescript-generate-swagger/swagger-tegg")
 const path = require('path');
 swaggerTegg({
   projectDir: path.join(__dirname, '../'),

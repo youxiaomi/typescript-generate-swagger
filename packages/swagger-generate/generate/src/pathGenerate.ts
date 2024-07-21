@@ -1,4 +1,4 @@
-import { PathInfo, SwaggerDoc, SwaggerResponse } from "@swagger-generate/share"
+import { PathInfo, SwaggerDoc, SwaggerResponse } from "../../share"
 import { convertSchema } from "./schemaGenerate"
 
 function convertResponse(responses: SwaggerResponse) {

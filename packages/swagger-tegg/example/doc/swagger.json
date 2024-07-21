@@ -1,0 +1,155 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "swagger doc",
+    "description": "swagger doc",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/order/getOrder": {
+      "get": {
+        "summary": "",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "orderId": {
+                      "type": "string",
+                      "description": "订单id"
+                    },
+                    "address": {
+                      "type": "string",
+                      "description": ""
+                    },
+                    "price": {
+                      "type": "number",
+                      "description": ""
+                    }
+                  },
+                  "required": [
+                    "orderId",
+                    "price"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user/getName": {
+      "get": {
+        "summary": "",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "description": ""
+                    },
+                    "age": {
+                      "type": "number",
+                      "description": ""
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "age"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user/updateUser": {
+      "post": {
+        "summary": "这是summary描述",
+        "description": "这是descriptionm描述",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "type": "object",
+                    "properties": {
+                      "name": {
+                        "type": "string",
+                        "description": "用户名字"
+                      },
+                      "age": {
+                        "type": "number",
+                        "description": "用户年龄"
+                      },
+                      "address": {
+                        "type": "string",
+                        "description": "",
+                        "required": false
+                      }
+                    }
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "userId": {
+                        "type": "number",
+                        "description": ""
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "description": "用户名字"
+                    },
+                    "age": {
+                      "type": "number",
+                      "description": "用户年龄"
+                    },
+                    "address": {
+                      "type": "string",
+                      "description": ""
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "age"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,4 +1,5 @@
-import { SwaggerParameter, SwaggerParamsPostion, SwaggerTypes, SwggerRequestBody, TypeNodeArray, TypeNodeInfo, TypeNodeObject, TypeNodePrimitive } from "@swagger-generate/share"
+import { SwaggerParameter, SwaggerParamsPostion, SwaggerTypes, SwggerRequestBody, TypeNodeArray, TypeNodeInfo, TypeNodeObject, TypeNodePrimitive } from "../../share"
+import { convertSchema } from "./schemaGenerate"
 
 
 function isTypeNodeObject(typeNodeInfo:TypeNodeInfo):typeNodeInfo is TypeNodeObject{
@@ -43,11 +44,12 @@ export function convertTypeNodeInfoToSwaggerRequestBody(typeNodeInfo?:TypeNodeIn
   if(!typeNodeInfo){
     return
   }
+  
   let requestBody:SwggerRequestBody = {
     required: true,
     content:{
       'application/json':{
-        schema: typeNodeInfo
+        schema: convertSchema(typeNodeInfo)
       }
     }
   }

@@ -1,5 +1,5 @@
 {
-  "name": "swagger-generate",
+  "name": "typescript-generate-swagger",
   "version": "1.0.0",
   "description": "",
   "main": "packages/swagger-tegg/dist/index.js",
@@ -13,22 +13,17 @@
   ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "pack": "npm pack --pack-destination dist "
+    "pack": "npm pack --pack-destination dist"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@swagger-generate/ast-parser": "file:./packages/ast-parser",
-    "@swagger-generate/share": "file:./packages/share",
-    "@swagger-generate/swagger-generate": "file:./packages/swagger-generate",
-    "@swagger-generate/swagger-tegg": "file:./packages/swagger-tegg",
-    "@types/babel-core": "^6.25.10",
-    "@types/node": "^20.10.6",
     "fs-extra": "^11.2.0",
-    "typescript": "^5.3.3",
-    "vinyl-fs": "^4.0.0"
+    "typescript": "^5.3.3"
   },
   "devDependencies": {
+    "@types/node": "^20.10.6",
+    "vinyl-fs": "^4.0.0",
     "@babel/core": "^7.24.7",
     "@babel/plugin-transform-typescript": "^7.24.7",
     "@babel/preset-env": "^7.24.7",

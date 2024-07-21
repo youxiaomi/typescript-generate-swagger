@@ -1,11 +1,13 @@
 {
-  "name": "@swagger-generate/swagger-generate",
+  "name": "@typescript-generate-swagger/swagger-generate",
   "version": "1.0.0",
   "description": "",
   "main": "dist/index.js",
+  "module": "index.ts",
   "scripts": {
     "clean":"rimraf dist",
     "build": "npm run clean && tsc",
+    "pack": "npm run build && npm pack --pack-destination dist",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",

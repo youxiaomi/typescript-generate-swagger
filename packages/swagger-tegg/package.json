@@ -1,17 +1,22 @@
 {
-  "name": "@swagger-generate/swagger-tegg",
+  "name": "@typescript-generate-swagger/swagger-tegg",
   "version": "1.0.0",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "bin": {
+    "swagger-tegg": "dist/index.js"
+  },
   "scripts": {
-    "clean":"rimraf dist",
+    "clean": "rimraf dist",
     "build": "npm run clean && tsc",
+    "pack": "npm run build && npm pack --pack-destination dist",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
   "description": "",
   "dependencies": {
-
+    "@typescript-generate-swagger/swagger-generate": "^1.0.0",
+    "typescript": "^5.0.0"
   }
 }

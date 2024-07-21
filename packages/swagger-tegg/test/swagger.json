@@ -1,0 +1,181 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "这是自动生成的文档通过typescript-generate-swagger/swagger-tegg",
+    "description": "swagger doc生成example",
+    "version": "1.0.0",
+    "termsOfService": "http://typescript-generate-swagger/swagger-tegg"
+  },
+  "paths": {
+    "/user/getName": {
+      "get": {
+        "summary": "获取用户名字",
+        "description": "这是descriptionm描述",
+        "parameters": [
+          {
+            "name": "userId",
+            "required": true,
+            "in": "query",
+            "description": "用户id",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "name",
+            "required": true,
+            "in": "query",
+            "description": "这是  queryObj中的描述",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "description": "这是对象上的注释egg"
+                    },
+                    "age": {
+                      "type": "number",
+                      "description": "这是对象上的注释"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "age"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user/updateUser": {
+      "post": {
+        "summary": "这是summary描述",
+        "description": "这是descriptionm描述",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "type": "object",
+                    "properties": {
+                      "name": {
+                        "type": "string",
+                        "description": "用户名字"
+                      },
+                      "age": {
+                        "type": "number",
+                        "description": "用户年龄"
+                      },
+                      "address": {
+                        "type": "string",
+                        "description": "用户地址"
+                      }
+                    },
+                    "required": [
+                      "name",
+                      "age"
+                    ]
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "userId": {
+                        "type": "number",
+                        "description": ""
+                      }
+                    },
+                    "required": [
+                      "userId"
+                    ]
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "description": "用户名字"
+                    },
+                    "age": {
+                      "type": "number",
+                      "description": "用户年龄"
+                    },
+                    "address": {
+                      "type": "string",
+                      "description": "用户地址"
+                    }
+                  },
+                  "required": [
+                    "name",
+                    "age"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/order/getOrder": {
+      "get": {
+        "summary": "",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "orderId": {
+                      "type": "string",
+                      "description": "订单id"
+                    },
+                    "address": {
+                      "type": "string",
+                      "description": "地址"
+                    },
+                    "price": {
+                      "type": "number",
+                      "description": "金额"
+                    }
+                  },
+                  "required": [
+                    "orderId",
+                    "price"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

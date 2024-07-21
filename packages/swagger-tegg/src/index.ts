@@ -1,8 +1,8 @@
-import { createTsPrograme } from '@swagger-generate/ast-parser'
-import { createTsChecker } from '@swagger-generate/ast-parser';
+import { createTsPrograme } from '@typescript-generate-swagger/swagger-generate'
+import { createTsChecker } from '@typescript-generate-swagger/swagger-generate';
 import { parserController } from './parserController';
-import { ParserTypeInfo } from '@swagger-generate/ast-parser';
-import { SwaggerGenerateConfig, getConfig, setConfig  } from '@swagger-generate/share'
+import { ParserTypeInfo } from '@typescript-generate-swagger/swagger-generate';
+import { SwaggerGenerateConfig, getConfig, setConfig  } from '@typescript-generate-swagger/swagger-generate'
 
 
 

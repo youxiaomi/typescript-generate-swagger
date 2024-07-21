@@ -1,10 +1,10 @@
 
 import * as ts from 'typescript'
-import { ParserTypeInfo, getDocType, getCommentTags } from '@swagger-generate/ast-parser'
-import {  HttpContent, HttpMethod, PathInfo, SwaggerParameter, SwaggerTypes, TypeNodeInfo, TypeNodeObject, TypeNodePrimitive } from '@swagger-generate/share'
-import { getSymbolComment } from '@swagger-generate/ast-parser'
-import { convertTypeNodeInfoToSwaggerRequestBody, convertTypeNodeToSwggerParameters } from '@swagger-generate/swagger-generate'
-import { convertTypeNodeInfoToSwaggerResponse ,createDoc } from '@swagger-generate/swagger-generate'
+import { ParserTypeInfo, getDocType, getCommentTags } from '@typescript-generate-swagger/swagger-generate'
+import {  HttpContent, HttpMethod, PathInfo, SwaggerParameter, SwaggerTypes, TypeNodeInfo, TypeNodeObject, TypeNodePrimitive } from '@typescript-generate-swagger/swagger-generate'
+import { getTsNodeComment } from '@typescript-generate-swagger/swagger-generate'
+import { convertTypeNodeInfoToSwaggerRequestBody, convertTypeNodeToSwggerParameters } from '@typescript-generate-swagger/swagger-generate'
+import { convertTypeNodeInfoToSwaggerResponse ,createDoc } from '@typescript-generate-swagger/swagger-generate'
 
 
 
@@ -133,7 +133,7 @@ function processClassMemberQueryParameters(parameters:ts.NodeArray<ts.ParameterD
   function processQuery(parameter:ts.ParameterDeclaration) {
     let { type, questionToken, name, modifiers } = parameter
     let typeText = getDocType(type)
-    let description = getSymbolComment(parameter)
+    let description = getTsNodeComment(parameter)
     let nameText = name.getText()
     let required = !questionToken
     let typeNodeInfo: TypeNodePrimitive = {
@@ -199,7 +199,7 @@ function findCtxQueryType(BodyBlock: ts.Block){
 export function getControllerFiles (programe:ts.Program){
   let files = programe.getSourceFiles();
   return files.filter(file=>{
-    return file.fileName.match(new RegExp(`/app/module/.*controller`))
+    return file.fileName.match(new RegExp(`/app/module/.*controller`,'i'))
   })
 }
 
@@ -219,11 +219,6 @@ export const parserController = (parserTypeInfo:ParserTypeInfo)=>{
       ...pathInfo,
       ...currentPathInfo,
     }
-    // datas = {
-    //   ...datas,
-    //   ...data
-    // }
-    // console.log(controller.fileName)
   })
   let schemas = parserTypeInfo.getSchemaTypeInfo()
   createDoc(pathInfo,schemas)

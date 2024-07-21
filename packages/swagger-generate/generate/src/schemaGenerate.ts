@@ -1,4 +1,4 @@
-import { SwaggerDoc, SwaggerTypes, TypeNodeInfo } from "@swagger-generate/share"
+import { SwaggerDoc, SwaggerTypes, TypeNodeInfo } from "../../share"
 
 
 
@@ -28,10 +28,10 @@ export function convertSchema(responses:TypeNodeInfo){
     responses.oneOf = oneOf
   }
   if ('allOf' in responses) {
-    let oneOf = responses.allOf?.map(item => {
+    let allOf = responses.allOf?.map(item => {
       return convertSchema(item)
     })
-    responses.oneOf = oneOf
+    responses.allOf = allOf
   }
   return responses
 }

@@ -1,9 +1,10 @@
 import * as ts from 'typescript'
-import { HttpContent, HttpMethod, PathInfo, SwaggerTypes, TypeNodeArray, TypeNodeInfo, TypeNodeObject, TypeNodePrimitive,  } from '@swagger-generate/share'
+import { HttpContent, HttpMethod, PathInfo, SwaggerTypes, TypeNodeArray, TypeNodeInfo, TypeNodeObject, TypeNodePrimitive,  } from "../../share"
 import { findNodeAtPosition, isFristBreakLine, isObjectType,  } from '../utils/node'
-import { omitUndefined } from '../utils'
+import { omitUndefined,  } from '../utils'
+import { getTsNodeComment } from '../utils/node'
 
-import { getSchemaName } from "@swagger-generate/swagger-generate"
+import { getSchemaName } from "@typescript-generate-swagger/swagger-generate"
 export function getDocType(typeNode?: ts.TypeNode) {
   if(!typeNode){
     return SwaggerTypes.string
@@ -44,12 +45,22 @@ function getSymbolComment(currentSymbol?: ts.Symbol) {
   
   currentSymbol.getDeclarations()?.forEach(declaration => {
     let parent = declaration.parent
+    if(ts.isObjectLiteralExpression(parent)){
+      return getComment(parent.properties)
+    }
     if (ts.isTypeLiteralNode(parent) || ts.isInterfaceDeclaration(parent) || ts.isEnumDeclaration(parent)) {
-      let currentIndex = parent.members.indexOf(declaration as any)
+      return getComment(parent.members)
+    }
+    function getComment(sublings: ts.NodeArray<ts.TypeElement|ts.EnumMember| ts.ObjectLiteralElementLike>) {
+      comment = getTsNodeComment(declaration)
+      if(comment){
+        return comment
+      }
+      let currentIndex = sublings.indexOf(declaration as any)
       
       if (currentIndex > -1) {
-        if (currentIndex != parent.members.length - 1) {
-          let next = parent.members[currentIndex + 1]
+        if (currentIndex != sublings.length - 1) {
+          let next = sublings[currentIndex + 1]
           comment = getNodeComment(next)
         } else {
           let node = findNodeAtPosition(declaration.parent, declaration.end + 1)
@@ -58,7 +69,6 @@ function getSymbolComment(currentSymbol?: ts.Symbol) {
           }
         }
       }
-
     }
   })
 

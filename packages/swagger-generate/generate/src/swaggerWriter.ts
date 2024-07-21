@@ -1,5 +1,5 @@
 import path from "path";
-import { SwaggerDoc, SwaggerGenerateConfig } from "@swagger-generate/share";
+import { SwaggerDoc, SwaggerGenerateConfig } from "../../share";
 import fs from 'fs'
 
 

@@ -1,6 +1,4 @@
-
 {
-  "extends":"@swagger-generate/share",
   "compilerOptions": {
     "module": "CommonJS",
     "esModuleInterop": true,
