@@ -1,4 +1,4 @@
-## swagger-generate/swagger-tegg
+## @typescript-generate-swagger/swagger-tegg
 只支持egg.js的tegg版本。通过typescript的类型定义,自动生成swaggger文档。   
 通过读取带controller标识的文件名来获取tegg的controller（userController.ts）   
 Only the tegg version of egg.js is supported.    
