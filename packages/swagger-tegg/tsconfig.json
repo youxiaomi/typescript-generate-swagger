@@ -12,4 +12,5 @@
     "allowJs": true,
     "baseUrl": "./",
   },
+  "exclude": ["example","test"]
 }

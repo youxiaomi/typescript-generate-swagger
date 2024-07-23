@@ -1,19 +1,26 @@
 {
   "name": "@typescript-generate-swagger/swagger-tegg",
   "version": "1.0.0",
+  "private":false,
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
-  "bin": {
-    "swagger-tegg": "dist/index.js"
-  },
+  "homepage": "https://github.com/youxiaomi/typescript-generate-swagger",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "clean": "rimraf dist",
     "build": "npm run clean && tsc",
     "pack": "npm run build && npm pack --pack-destination dist",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepublishOnly": "npm run build"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "youxiaomi",
+  "license": "MIT",
+  "keywords": [
+    "swagger",
+    "typescript"
+  ],
   "description": "",
   "dependencies": {
     "@typescript-generate-swagger/swagger-generate": "^1.0.0",

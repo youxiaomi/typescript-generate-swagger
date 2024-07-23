@@ -3,13 +3,19 @@
   "version": "1.0.0",
   "description": "",
   "main": "dist/index.js",
+  "private":false,
   "module": "index.ts",
+  "homepage": "https://github.com/youxiaomi/typescript-generate-swagger",
   "scripts": {
-    "clean":"rimraf dist",
+    "clean": "rimraf dist",
     "build": "npm run clean && tsc",
     "pack": "npm run build && npm pack --pack-destination dist",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepublishOnly": "npm run build"
   },
-  "author": "",
-  "license": "ISC"
+  "files": [
+    "dist"
+  ],
+  "author": "youxiaomi",
+  "license": "MIT"
 }

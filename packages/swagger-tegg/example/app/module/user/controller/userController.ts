@@ -9,9 +9,6 @@ type User = {
   address?: string
 }
 
-
-
-
 @HTTPController({path:'/user'})
 export class UserController {
    /**
