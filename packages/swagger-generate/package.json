@@ -17,5 +17,8 @@
     "dist"
   ],
   "author": "youxiaomi",
+  "dependencies": {
+    "typescript": "^4.5.5"
+  },
   "license": "MIT"
 }
