@@ -1,9 +1,9 @@
 {
   "name": "@typescript-generate-swagger/swagger-generate",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "",
   "main": "dist/index.js",
-  "private":false,
+  "private": false,
   "module": "index.ts",
   "homepage": "https://github.com/youxiaomi/typescript-generate-swagger",
   "scripts": {
