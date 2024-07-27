@@ -4,7 +4,7 @@ import { findNodeAtPosition, isFristBreakLine, isObjectType,  } from '../utils/n
 import { omitUndefined,  } from '../utils'
 import { getTsNodeComment } from '../utils/node'
 
-import { getSchemaName } from "@typescript-generate-swagger/swagger-generate"
+import { getSchemaName } from "../../generate"
 export function getDocType(typeNode?: ts.TypeNode) {
   if(!typeNode){
     return SwaggerTypes.string
@@ -184,6 +184,13 @@ export class ParserTypeInfo{
         if(symbolNode.valueDeclaration && ts.isPropertySignature(symbolNode.valueDeclaration)){
           if(symbolNode.valueDeclaration.questionToken){
             typeNodeInfo.required = false
+          }else{
+            if(ts.TypeFlags.Union & currentType.flags){
+              let hasUndefined = (currentType as  ts.UnionType).types.find(item => ts.TypeFlags.Undefined & item.flags)
+              if(hasUndefined){
+                typeNodeInfo.required = false
+              }
+            }
           }
         }
         typeNodeInfoObject.properties[name] = typeNodeInfo
@@ -214,14 +221,25 @@ export class ParserTypeInfo{
       } 
       return []
     }
+    let currentTypes = [...currentType.types]
+    let booleanTypes = currentTypes.filter((type,index) =>ts.TypeFlags.BooleanLiteral & type.flags)
+    let typeinfos:TypeNodeInfo[] = []
+    if(booleanTypes.length == 2){
+      currentTypes = currentTypes.filter((type,index) =>!(ts.TypeFlags.BooleanLiteral & type.flags))
+      let booleanTypeNode = ts.factory.createToken(ts.SyntaxKind.BooleanKeyword)
+      typeinfos.push(
+        this.getDefaultTypeInfo(booleanTypeNode,currentSymbol)
+      )
+    }
     /** union  key?:type   is has undefine */
     // if(!currentSymbol && currentType.isUnion()){
-    if(currentType.types.length){
-      let typeinfos = currentType.types.map(type => {
+    if(currentTypes.length){
+      let otherTypesInfo = currentTypes.map(type => {
         return this.getAllTypeNode(type,currentSymbol)
       })
-      return omitUndefined(typeinfos)
+      return [...typeinfos,...omitUndefined(otherTypesInfo)]
     }
+
     /** this not support */
     let types = currentSymbol?.declarations?.map(declaration => {
       if(ts.isPropertySignature(declaration)){
@@ -299,7 +317,6 @@ export class ParserTypeInfo{
         description: getSymbolComment(currentSymbol),
       }
     }
-
     if (currentType.isNumberLiteral()) {
       return this.getTypeNodePrimitive(SwaggerTypes.number,currentType)
     }
@@ -325,7 +342,6 @@ export class ParserTypeInfo{
     }
     if (currentType.isUnion()) {
       // console.log(currentSymbol?.getName())
-     
      return this.getTypeNodeUnion(currentType,currentSymbol)
     }
     
@@ -347,9 +363,9 @@ export class ParserTypeInfo{
   }
   getAllTypeNode = (currentType: ts.Type, currentSymbol: ts.Symbol | undefined,cacheSchema?:boolean): TypeNodeInfo | undefined => {
     const checker = this.checker
-    if(currentSymbol?.declarations?.length && currentSymbol?.declarations?.length>1){
-      // debugger 
-    }
+    // if(currentSymbol?.declarations?.length && currentSymbol?.declarations?.length>1){
+    //   // debugger 
+    // }
     let typeNode = checker.typeToTypeNode(currentType, undefined, undefined)
     let typeString = checker.typeToString(currentType)
     // console.log(typeString, currentSymbol)

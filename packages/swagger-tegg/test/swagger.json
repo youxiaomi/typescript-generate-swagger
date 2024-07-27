@@ -84,6 +84,10 @@
                       "address": {
                         "type": "string",
                         "description": "用户地址"
+                      },
+                      "enabled": {
+                        "type": "boolean",
+                        "description": "是否开启"
                       }
                     },
                     "required": [
@@ -127,6 +131,10 @@
                     "address": {
                       "type": "string",
                       "description": "用户地址"
+                    },
+                    "enabled": {
+                      "type": "boolean",
+                      "description": "是否开启"
                     }
                   },
                   "required": [

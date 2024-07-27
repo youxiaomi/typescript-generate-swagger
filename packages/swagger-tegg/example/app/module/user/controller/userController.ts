@@ -7,6 +7,8 @@ type User = {
   age: number  //用户年龄
   /** 用户地址 */
   address?: string
+  /** 是否开启 */
+  enabled?: boolean
 }
 
 @HTTPController({path:'/user'})
@@ -44,6 +46,7 @@ export class UserController {
       name: 'egg',
       age: 20,
       address: '北京',  
+      enabled: false
     }
     return user
   }
