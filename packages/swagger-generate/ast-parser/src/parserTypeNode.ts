@@ -181,8 +181,10 @@ export class ParserTypeInfo{
       let description = getSymbolComment(symbolNode)
       if (typeNodeInfo) {
         typeNodeInfo.description = typeNodeInfo.description || description
-        if(symbolNode.valueDeclaration && ts.isPropertySignature(symbolNode.valueDeclaration)){
-          if(symbolNode.valueDeclaration.questionToken){
+        /** 当前类型加了工具类型过后，就读不到类型具体的symbolNode.valueDeclaration */
+        let valueDeclaration = symbolNode.valueDeclaration || symbolNode.declarations[0]
+        if(valueDeclaration && ts.isPropertySignature(valueDeclaration)){
+          if(valueDeclaration.questionToken){
             typeNodeInfo.required = false
           }else{
             if(ts.TypeFlags.Union & currentType.flags){
