@@ -145,6 +145,14 @@ export class ParserTypeInfo{
     if (ts.isArrayTypeNode(typeNode)) {
       return this.getTypeNodeArray(currentType)
     }
+    if(ts.isTupleTypeNode(typeNode)){
+      //  [{a:1},{b:1}] 如果多个就是联合类型
+      let arrayEle = currentType.getNumberIndexType()
+      return {
+          type: SwaggerTypes.array,
+          items: this.getAllTypeNode(arrayEle, arrayEle.getSymbol()) || { type: SwaggerTypes.string },
+      }  as TypeNodeArray
+    }
     let typeNodeInfoObject: TypeNodeObject = {
       type: SwaggerTypes.object,
       properties: {},
@@ -182,7 +190,7 @@ export class ParserTypeInfo{
       if (typeNodeInfo) {
         typeNodeInfo.description = typeNodeInfo.description || description
         /** 当前类型加了工具类型过后，就读不到类型具体的symbolNode.valueDeclaration */
-        let valueDeclaration = symbolNode.valueDeclaration || symbolNode.declarations[0]
+        let valueDeclaration = symbolNode.valueDeclaration || symbolNode.declarations?.[0]
         if(valueDeclaration && ts.isPropertySignature(valueDeclaration)){
           if(valueDeclaration.questionToken){
             typeNodeInfo.required = false

@@ -1,6 +1,6 @@
 {
   "name": "@typescript-generate-swagger/swagger-generate",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "",
   "main": "dist/index.js",
   "private": false,
