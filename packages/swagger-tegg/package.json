@@ -1,6 +1,6 @@
 {
   "name": "@typescript-generate-swagger/swagger-tegg",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "private": false,
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -25,7 +25,7 @@
   ],
   "description": "",
   "dependencies": {
-    "@typescript-generate-swagger/swagger-generate": "^1.0.3",
+    "@typescript-generate-swagger/swagger-generate": "^1.0.5",
     "typescript": "^5.3.3"
   }
 }
