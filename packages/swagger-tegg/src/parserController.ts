@@ -5,7 +5,7 @@ import {  HttpContent, HttpMethod, PathInfo, SwaggerParameter, SwaggerTypes, Typ
 import { getTsNodeComment } from '@typescript-generate-swagger/swagger-generate'
 import { convertTypeNodeInfoToSwaggerRequestBody, convertTypeNodeToSwggerParameters } from '@typescript-generate-swagger/swagger-generate'
 import { convertTypeNodeInfoToSwaggerResponse ,createDoc } from '@typescript-generate-swagger/swagger-generate'
-
+import path  from 'path'
 
 
 function getHttpMethodModifyArg(modifiers:ts.NodeArray<ts.ModifierLike>){
@@ -29,7 +29,10 @@ function getHttpMethodModifyArg(modifiers:ts.NodeArray<ts.ModifierLike>){
 }
 
 
-function getPathMethod(modifiers:ts.NodeArray<ts.ModifierLike>){
+function getPathMethod(modifiers?:ts.NodeArray<ts.ModifierLike>){
+  if(!modifiers){
+    return
+  }
   let http: HttpMethod = HttpMethod.GET
   let path = ''
   let arg = getHttpMethodModifyArg(modifiers)
@@ -260,8 +263,9 @@ class ParserControllerInfo{
         let response = this.parserTypeInfo.getReturnType(checker, member) 
         let currentPathInfo = this.processPathInfo(checker, member, response, basePath)
         if(currentPathInfo){
-          let fullPath = basePath + currentPathInfo.path
-          let { path,http,httpContent} = currentPathInfo
+
+          let fullPath = path.join(basePath,currentPathInfo.path)
+          let { http,httpContent} = currentPathInfo
           let currentPath = pathInfo[fullPath] = pathInfo[fullPath] || {}
           currentPath[http] = httpContent;
         }
@@ -272,14 +276,20 @@ class ParserControllerInfo{
   }
   processPathInfo(checker: ts.TypeChecker, member: ts.MethodDeclaration, response?: TypeNodeInfo, basePath: string = '') {
     let { modifiers  } = member
-    if(!modifiers){
-      return
-    }
+    const {summary, description,router} = getCommentTags(member)
+    const [docMethod,docPath] = router.split(' ').map(item => item.trim())
     let pathMethod = getPathMethod(modifiers)
-    if(!pathMethod){
+    let path = '',http = ''
+    if (pathMethod) {
+      http = pathMethod.http
+      path = pathMethod.path
+    } else {
+      http = docMethod
+      path = docPath
+    }
+    if(!http && !path){
       return
     }
-    let { http,path } = pathMethod
     let {parameters,requestBody} = this.processClassMemberParameters(checker, member)
   
     let currentPathInfo: HttpContent = {}
@@ -293,7 +303,7 @@ class ParserControllerInfo{
       currentPathInfo.responses = convertTypeNodeInfoToSwaggerResponse(response)
     }
     
-    let { summary, description } = getCommentTags(member)
+    // let { summary, description } = getCommentTags(member)
     // fs.writeFileSync(`${__dirname}/teggController.ts`, file.text)
     return {
       path,

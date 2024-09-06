@@ -77,6 +77,7 @@ function getSymbolComment(currentSymbol?: ts.Symbol) {
 export function getCommentTags (node:ts.Node,){
   let summary = ''
   let description = ''
+  let router = ''
   let tags = ts.getJSDocTags(node)
 
   tags.forEach(tag => {
@@ -90,12 +91,16 @@ export function getCommentTags (node:ts.Node,){
     if (tagNameText == 'description') {
       description = commentText
     }
+    if (tagNameText == 'router') {
+      router = commentText
+    }
     return
   })
 
   return {
     summary,
-    description
+    description,
+    router
   }
 }
 
@@ -393,7 +398,9 @@ export class ParserTypeInfo{
     let hasInternalSymbolName = Object.values(ts.InternalSymbolName).includes(symbolName as any)
     let isKeyWord = this.getKeyWord(currentType)
     let typeSymbol = currentType.getSymbol()
-    if(isTypeReferenceNode && typeSymbol && !hasInternalSymbolName && cacheSchema && !isKeyWord){
+    let typeArguments = checker.getTypeArguments(currentType as ts.TypeReference)
+    let isGenericeType = !!typeArguments.length
+    if(isTypeReferenceNode && typeSymbol && !hasInternalSymbolName && cacheSchema && !isKeyWord && !isGenericeType){
 
       let symbolName = this.getTypeInfoSymbolName(typeSymbol,()=>this.extractAllTypeNode(currentType,currentSymbol))
       return {

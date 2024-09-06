@@ -39,14 +39,38 @@ export class UserController {
    */
   @HTTPMethod({
     method: HTTPMethodEnum.POST,
-    path: '/updateUser',
+    path: 'updateUser',
   })
   async updateUser(@Context() ctx: EggContext, @HTTPBody() body: User & {userId: number }){
     let user:User = {
       name: 'egg',
       age: 20,
-      address: '北京',  
+      address: '地址',  
       enabled: false
+    }
+    return user
+  }
+
+
+  /**
+   * @summary 第一个是method,第二个参数是path,中间用空格分隔
+   * @router delete /user/deleteUser
+   * @description  适用于第三方包在编译过程过后，d.ts中没有httpMethod，所用通过 router 这个tag来识。不支持ctx.query识别类型，智能通过HTTPQuery来识别。
+   */
+  async deleteUser(@Context() ctx: EggContext, @HTTPQuery() userId:string){
+    type User2<T> = {
+      type:T
+    }
+    let user:{
+      name:User2<string>,
+      age:User2<number>
+    } = {
+      name: {
+        type: 'name'
+      },
+      age:{
+        type: 18
+      }
     }
     return user
   }
