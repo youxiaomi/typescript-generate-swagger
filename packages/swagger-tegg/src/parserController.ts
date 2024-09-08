@@ -244,7 +244,10 @@ class ParserControllerInfo{
         if(basePath === undefined){
           continue
         }
-        let currentPathInfo = this.getControllerPath(members,basePath)
+        let classType = this.parserTypeInfo.checker.getTypeAtLocation(statement)
+        let allMemebers = classType.getProperties().map(item => item.getDeclarations()[0])
+  
+        let currentPathInfo = this.getControllerPath(allMemebers,basePath)
         pathInfo = {
           ...pathInfo,
           ...currentPathInfo
@@ -253,7 +256,7 @@ class ParserControllerInfo{
     }
     return pathInfo
   }
-  getControllerPath( members:ts.NodeArray<ts.ClassElement>,basePath?:string){
+  getControllerPath( members:Array<ts.Declaration>,basePath?:string){
     let checker =  this.checker 
     let pathInfo: PathInfo = {
   
@@ -290,6 +293,7 @@ class ParserControllerInfo{
     if(!http && !path){
       return
     }
+    http = http.toLowerCase()
     let {parameters,requestBody} = this.processClassMemberParameters(checker, member)
   
     let currentPathInfo: HttpContent = {}

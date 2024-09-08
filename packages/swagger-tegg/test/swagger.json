@@ -148,18 +148,18 @@
         }
       }
     },
-    "/user/user/deleteUser": {
-      "delete": {
-        "summary": "第一个是method,第二个参数是path,中间用空格分隔",
-        "description": "适用于第三方包在编译过程过后，d.ts中没有httpMethod，所用通过 router 这个tag来识。不支持ctx.query识别类型，智能通过HTTPQuery来识别。",
+    "/user/findMember": {
+      "get": {
+        "summary": "适用于继承第三方包controller，在编译过后d.ts中没有httpMethod。通过 router 这个tag来识",
+        "description": "第一个是method,第二个参数是path,中间用空格分隔，不支持ctx.query识别类型，只能通过HTTPQuery来识别。",
         "parameters": [
           {
             "name": "userId",
             "required": true,
             "in": "query",
-            "description": "",
+            "description": "用户id",
             "schema": {
-              "type": "string"
+              "type": "number"
             }
           }
         ],
@@ -170,32 +170,90 @@
               "application/json": {
                 "schema": {
                   "type": "object",
+                  "properties": {}
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user/updateMember": {
+      "post": {
+        "summary": "这是summary描述",
+        "description": "这是descriptionm描述",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "type": "object",
+                    "properties": {
+                      "name": {
+                        "type": "string",
+                        "description": "用户名字"
+                      },
+                      "age": {
+                        "type": "number",
+                        "description": "用户年龄"
+                      },
+                      "address": {
+                        "type": "string",
+                        "description": "用户地址"
+                      },
+                      "enabled": {
+                        "type": "boolean",
+                        "description": "是否开启"
+                      }
+                    },
+                    "required": [
+                      "name",
+                      "age"
+                    ]
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "userId": {
+                        "type": "number",
+                        "description": ""
+                      }
+                    },
+                    "required": [
+                      "userId"
+                    ]
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
                   "properties": {
                     "name": {
-                      "type": "object",
-                      "properties": {
-                        "type": {
-                          "type": "string",
-                          "description": ""
-                        }
-                      },
-                      "description": "",
-                      "required": [
-                        "type"
-                      ]
+                      "type": "string",
+                      "description": "用户名字"
                     },
                     "age": {
-                      "type": "object",
-                      "properties": {
-                        "type": {
-                          "type": "number",
-                          "description": ""
-                        }
-                      },
-                      "description": "",
-                      "required": [
-                        "type"
-                      ]
+                      "type": "number",
+                      "description": "用户年龄"
+                    },
+                    "address": {
+                      "type": "string",
+                      "description": "用户地址"
+                    },
+                    "enabled": {
+                      "type": "boolean",
+                      "description": "是否开启"
                     }
                   },
                   "required": [
