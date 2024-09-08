@@ -15,7 +15,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "pack": "npm pack --pack-destination dist",
     "lerna:version": "lerna version",
-    "lerna:publish": "lerna publish",
+    "lerna:publish": "lerna publish from-package",
     "clean":"lerna run clean"
   },
   "author": "",
