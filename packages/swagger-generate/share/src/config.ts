@@ -30,7 +30,7 @@ const defaultSwaggerGenerateConfig: SwaggerGenerateConfig= {
 
 
 function isAbsolutePath(path:string){
-  return path[0] == '/'
+  return path[0] != '.'
 }
 
 

@@ -267,7 +267,7 @@ class ParserControllerInfo{
         let currentPathInfo = this.processPathInfo(checker, member, response, basePath)
         if(currentPathInfo){
 
-          let fullPath = path.join(basePath,currentPathInfo.path)
+          let fullPath = path.posix.join(basePath,currentPathInfo.path)
           let { http,httpContent} = currentPathInfo
           let currentPath = pathInfo[fullPath] = pathInfo[fullPath] || {}
           currentPath[http] = httpContent;
