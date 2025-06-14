@@ -147,6 +147,12 @@ export class ParserTypeInfo{
   }
   getTypeNodeObject(currentType:ts.Type,typeNode:ts.TypeNode){
     let visiteObjs = this.visiteObjs
+    if(ts.isTypeReferenceNode(typeNode)){
+      let symbol = currentType.getSymbol()
+      if(symbol.getName() == 'Array'){
+        return this.getTypeNodeArray(currentType)
+      }
+    }
     if (ts.isArrayTypeNode(typeNode)) {
       return this.getTypeNodeArray(currentType)
     }

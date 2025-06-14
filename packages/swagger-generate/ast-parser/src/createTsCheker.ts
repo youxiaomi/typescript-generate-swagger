@@ -11,11 +11,11 @@ export const createTsChecker = (program:ts.Program)=>{
   }
   let syntacticDiagnosticsSyncs = program.getSyntacticDiagnostics()
   if (syntacticDiagnosticsSyncs.length) {
-    getErrorMessage(semanticDiagnostics[0],'syntacticDiagnosticsSyncs')
+    getErrorMessage(syntacticDiagnosticsSyncs[0],'syntacticDiagnosticsSyncs')
   }
   let declarationDiagnostics = program.getDeclarationDiagnostics()
   if (declarationDiagnostics.length) {
-    getErrorMessage(semanticDiagnostics[0],'DeclarationDiagnostics')
+    getErrorMessage(declarationDiagnostics[0],'DeclarationDiagnostics')
   }
   return checker
 }
