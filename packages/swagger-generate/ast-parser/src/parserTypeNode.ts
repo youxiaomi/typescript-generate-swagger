@@ -252,6 +252,24 @@ export class ParserTypeInfo{
         this.getDefaultTypeInfo(booleanTypeNode,currentSymbol)
       )
     }
+    let enumTypes = currentTypes.filter((type,index) =>ts.TypeFlags.EnumLike & type.flags)
+    if (enumTypes.length) {
+      currentTypes = currentTypes.filter((type, index) => !(ts.TypeFlags.EnumLike & type.flags))
+      let enumObjsCache = new Set<ts.Node>()
+      enumTypes.forEach(type => {
+        let parent = type.symbol.valueDeclaration.parent
+        if (!enumObjsCache.has(parent)) {
+          enumObjsCache.add(parent)
+        }
+      })
+      enumObjsCache.forEach((node) => {
+        let type = this.checker.getTypeAtLocation(node)
+        let symbol = this.checker.getSymbolAtLocation(node)
+        typeinfos.push(this.getAllTypeNode(type, symbol))
+      })
+
+    }
+
     /** union  key?:type   is has undefine */
     // if(!currentSymbol && currentType.isUnion()){
     if(currentTypes.length){
@@ -383,6 +401,10 @@ export class ParserTypeInfo{
     }
   }
   getAllTypeNode = (currentType: ts.Type, currentSymbol: ts.Symbol | undefined,cacheSchema?:boolean): TypeNodeInfo | undefined => {
+    // 枚举类型或者。。。。
+    if(currentType.isUnion()){
+      cacheSchema = true
+    }
     const checker = this.checker
     // if(currentSymbol?.declarations?.length && currentSymbol?.declarations?.length>1){
     //   // debugger 
@@ -408,7 +430,8 @@ export class ParserTypeInfo{
     let isGenericeType = !!typeArguments.length
     if(isTypeReferenceNode && typeSymbol && !hasInternalSymbolName && cacheSchema && !isKeyWord && !isGenericeType){
 
-      let symbolName = this.getTypeInfoSymbolName(typeSymbol,()=>this.extractAllTypeNode(currentType,currentSymbol))
+      let symbolName = this.getTypeInfoSymbolName(typeSymbol,typeNode,()=>this.extractAllTypeNode(currentType,currentSymbol))
+      // let symbolName = this.getTypeInfoTypeName(typeNode,()=>this.extractAllTypeNode(currentType,currentSymbol))
       return {
         $ref: symbolName
       }
@@ -424,12 +447,20 @@ export class ParserTypeInfo{
     
     return typeInfo
   }
-  getTypeInfoSymbolName(symbol:ts.Symbol,cb:()=>TypeNodeInfo|undefined){
+  getTypeInfoTypeName(typeNode:ts.TypeNode,cb:()=>TypeNodeInfo|undefined){
+    if(ts.isTypeReferenceNode(typeNode)){
+      let name = typeNode.typeName.getText();
+      if(name){
+        return getSchemaName(name)
+      }
+    }
+  }
+  getTypeInfoSymbolName(symbol:ts.Symbol,typeNode:ts.TypeNode,cb:()=>TypeNodeInfo|undefined){
     let name = this.symbolNames.get(symbol);
     if(name){
       return getSchemaName(name)
     }
-    name = symbol.getName()
+    name = ts.isTypeReferenceNode(typeNode)  && ts.isIdentifier(typeNode.typeName)? typeNode.typeName.text  : symbol.getName()
     if(this.symbolNameTypeInfos.has(name)){
       name = `${name}_v`
     }
@@ -446,6 +477,7 @@ export class ParserTypeInfo{
       'string': ['String'],
       'number': ['Number','Int8Array','Int16Array','Int32Array','Uint8Array','Uint16Array','Uint32Array','Float32Array','Float64Array','BigInt64Array','BigUint64Array','Unit8ClampedArray'],
       "boolean": ['Boolean'],
+      "object": ['Object','object'],
     }
     if(typeString){
       return Object.keys(keyWords).find(key=> keyWords[key].includes(typeString))

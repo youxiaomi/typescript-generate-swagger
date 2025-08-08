@@ -5,7 +5,7 @@ import { SwaggerDoc, SwaggerTypes, TypeNodeInfo } from "../../share"
 export function convertSchema(responses:TypeNodeInfo){
   if ('type' in responses) {
     if(responses.type == SwaggerTypes.object){
-      let properties = responses.properties
+      let properties = responses.properties  || {}
       let requiredFileds = Object.keys(properties!).filter(name => {
         let currentRequiredVal = properties![name].required
         delete properties![name].required
