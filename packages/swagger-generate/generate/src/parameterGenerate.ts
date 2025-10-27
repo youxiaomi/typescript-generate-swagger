@@ -29,6 +29,14 @@ export function convertTypeNodeToSwggerParameters(typeNodeInfo:TypeNodeInfo){
             description: info.description,
             schema:schema
           })
+        }else{
+          parameters.push({
+            name: name,
+            required: required,
+            in: SwaggerParamsPostion.query,
+            description: info.description,
+            schema: info
+          });
         }
       })
     }

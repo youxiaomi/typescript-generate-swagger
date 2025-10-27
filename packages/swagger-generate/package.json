@@ -13,8 +13,22 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "prepublishOnly": "npm run build"
   },
+  "type": "module",
+  "exports": {
+    ".": {      
+      "import":{
+        "types":"./dist/index.d.js",
+        "import":"./index.ts",
+        "default": "./dist/index.js"
+      }
+    }
+  },
   "files": [
-    "dist"
+    "dist",
+    "index.ts",
+    "share",
+    "ast-parser",
+    "generate"
   ],
   "author": "youxiaomi",
   "dependencies": {

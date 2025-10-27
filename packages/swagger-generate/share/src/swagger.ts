@@ -126,7 +126,7 @@ export interface SwaggerParameter {
       type?:SwaggerTypes
     }
     default?: string // "available"
-  }
+  } | TypeNodeInfo
 }
 export interface SwggerRequestBody {
   required?: boolean,
