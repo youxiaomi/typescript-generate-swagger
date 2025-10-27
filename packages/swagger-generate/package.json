@@ -1,6 +1,6 @@
 {
   "name": "@typescript-generate-swagger/swagger-generate",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "",
   "main": "dist/index.js",
   "private": false,
@@ -15,10 +15,10 @@
   },
   "type": "module",
   "exports": {
-    ".": {      
-      "import":{
-        "types":"./dist/index.d.js",
-        "import":"./index.ts",
+    ".": {
+      "import": {
+        "types": "./dist/index.d.js",
+        "import": "./index.ts",
         "default": "./dist/index.js"
       }
     }
