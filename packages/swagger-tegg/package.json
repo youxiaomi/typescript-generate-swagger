@@ -6,6 +6,8 @@
   "types": "dist/index.d.ts",
   "homepage": "https://github.com/youxiaomi/typescript-generate-swagger",
   "files": [
+    "src",
+    "index.ts",
     "dist"
   ],
   "scripts": {
@@ -14,6 +16,13 @@
     "pack": "npm run build && npm pack --pack-destination dist",
     "test": "echo \"Error: no test specified\" && exit 1",
     "prepublishOnly": "npm run build"
+  },
+   "exports": {
+    ".": {
+      "types": "./dist/index.d.js",
+      "import": "./index.ts",
+      "default": "./dist/index.js"
+    }
   },
   "author": "youxiaomi",
   "license": "MIT",
